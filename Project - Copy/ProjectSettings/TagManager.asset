@@ -52,3 +52,6 @@ TagManager:
   - name: Infront
     uniqueID: 3626731591
     locked: 0
+  - name: Gun
+    uniqueID: 1713000385
+    locked: 0
