@@ -19,7 +19,7 @@ TagManager:
   - Ground
   - MiniMap
   - BackGround
-  - 
+  - Obstacle
   - 
   - 
   - 
@@ -51,6 +51,12 @@ TagManager:
     locked: 0
   - name: Infront
     uniqueID: 3626731591
+    locked: 0
+  - name: Enemy
+    uniqueID: 2996549627
+    locked: 0
+  - name: Floor
+    uniqueID: 2235180539
     locked: 0
   - name: Gun
     uniqueID: 1713000385
