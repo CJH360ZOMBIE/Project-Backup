@@ -61,7 +61,7 @@ public class Shooting : MonoBehaviour
         {
             if(CurrentAmmo < MaxAmmo)
             {
-                StartCoroutine("Reload");
+                StartCoroutine("Reload"); 
             }
             
         }
@@ -74,7 +74,7 @@ public class Shooting : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, FirePoint.position, FirePoint.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(FirePoint.up * BulletForce, ForceMode2D.Impulse); 
-        animator.SetTrigger("Shoot");
+        animator.SetTrigger("Shoot"); //*IMPORTANT* make sure trigger name is set to "Shoot" 
 
 
         
@@ -86,7 +86,7 @@ public class Shooting : MonoBehaviour
         isReloading = true;
        Debug.Log("RELOADIN'");
 
-       animator.SetBool("Reloading", true);
+       animator.SetBool("Reloading", true); //*IMPORTANT* make sure animator name is set to "Reloading" 
 
        yield return new WaitForSeconds(ReloadTime - .25f);
 

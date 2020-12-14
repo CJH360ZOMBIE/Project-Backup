@@ -7,12 +7,15 @@ public class EnemyAI : MonoBehaviour
 {
     public Transform target;
     public Transform EnemyGFX;
-    public float speed = 200f; 
+    public float speed = 10f; 
     public float nextWaypointdistance = 3f;
-
+    public bool onGround = false;
+    public float groundLength = 0.6f;
     Path path; 
     int currentwaypoint = 0; 
     bool Reachedendofpath = false;
+    public LayerMask groundLayer;
+    public Vector3 colliderOffset;
 
     Seeker seeker;
     Rigidbody2D rb;
@@ -44,7 +47,7 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (path == null)
+        if (path == null && onGround)
         return;
 
         if (currentwaypoint >= path.vectorPath.Count)
@@ -55,10 +58,8 @@ public class EnemyAI : MonoBehaviour
         {
             Reachedendofpath = false;
         }
-
         Vector2 direction = ((Vector2)path.vectorPath[currentwaypoint] - rb.position).normalized;
         Vector2 force = direction * speed * Time.deltaTime;
-
         rb.AddForce(force);
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentwaypoint]);
@@ -76,5 +77,10 @@ public class EnemyAI : MonoBehaviour
         {
             EnemyGFX.localScale = new Vector3 (1f, 1f, 1f);
         }
+    }
+
+    void Update()
+    {
+        onGround = Physics2D.Raycast(transform.position + colliderOffset, Vector2.down, groundLength, groundLayer) || Physics2D.Raycast(transform.position - colliderOffset, Vector2.down, groundLength, groundLayer);
     }
 }
