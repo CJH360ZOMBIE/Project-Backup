@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Shooting : MonoBehaviour
 {
-    Vector2 mousePos;
-    Vector2 MouseRotation;
-
     public Transform FirePoint;
     public GameObject bulletPrefab;
     public float BulletForce = 20f;
     public Animator animator;
     public float FireRate;
     public float ReloadTime = 1f;
+    public float MouseOffset;   //gun rotation
     public int MaxAmmo = 10;
     public ParticleSystem MuzzleFlash;  
     // public Transform EmptyPoint;
@@ -21,6 +19,7 @@ public class Shooting : MonoBehaviour
 
     private int CurrentAmmo;
     private bool isReloading = false;
+    public Transform weapon; // weapon flip
 
     float ReadyForNextShot;
 
@@ -28,6 +27,8 @@ public class Shooting : MonoBehaviour
     {
         CurrentAmmo = MaxAmmo;
     }
+
+    
 
     // Update is called once per frame
     void Update()
@@ -114,5 +115,22 @@ public class Shooting : MonoBehaviour
         // Destroy(ShellPrefab);
         Destroy(bulletPrefab);
      }
+
+         void FixedUpdate()
+    {
+        Vector3 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+        //tut on BLACKTHORNPROD
+        transform.rotation = Quaternion.Euler(0f, 0f, rotZ + MouseOffset); 
+
+        if(rotZ < 89 && rotZ > -89)
+        {
+            return;
+        } 
+        else
+        {
+            weapon.Rotate(180,0,0);
+        }
+    }
 }
 
