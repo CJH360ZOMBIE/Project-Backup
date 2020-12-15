@@ -7,6 +7,7 @@ public class Score : MonoBehaviour
     public Text TimerText;
     private float startTime;
     private int CurrentAmmo;
+    public Canvas canvas;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +17,9 @@ public class Score : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (canvas.enabled == true)
+        {
+        
         float t = Time.time - startTime;
 
         string Seconds = (t % 999999).ToString("f2");
@@ -23,6 +27,8 @@ public class Score : MonoBehaviour
         // "f1" = n.o  floats i.e f1 = 1 
 
         TimerText.text = Seconds; 
+
+        }
 
     }
 }

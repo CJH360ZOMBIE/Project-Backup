@@ -6,11 +6,10 @@ using Pathfinding;
 public class EnemyAI : MonoBehaviour
 {
     public Transform target;
-    public Transform EnemyGFX;
+    public Transform Weapon;
     public float speed = 10f; 
+    public float TargetFollowSpeed = 5f; 
     public float nextWaypointdistance = 3f;
-    public bool onGround = false;
-    public float groundLength = 0.6f;
     Path path; 
     int currentwaypoint = 0; 
     bool Reachedendofpath = false;
@@ -32,7 +31,7 @@ public class EnemyAI : MonoBehaviour
     void UpdatePath()
     {
         if (seeker.IsDone())
-         seeker.StartPath(rb.position, target.position, OnPathComplete);
+        seeker.StartPath(rb.position, target.position, OnPathComplete);
     }
 
     void OnPathComplete(Path p)
@@ -47,9 +46,6 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (path == null && onGround)
-        return;
-
         if (currentwaypoint >= path.vectorPath.Count)
         {
             Reachedendofpath = true; 
@@ -67,20 +63,38 @@ public class EnemyAI : MonoBehaviour
         if(distance < nextWaypointdistance)
         {
             currentwaypoint++;
-        }
-        //switch enemy rotation depending where the enemy is facing 
-        if (force.x >= 0.01f)
-        {
-          EnemyGFX.localScale = new Vector3 (-1f, 1f, 1f);
+        }       
         
-        } else if (force.x <= -0.01f )
+
+    }        
+    void Update()
+    {
+    //rotate weapon to follow player
+    Vector3 difference = target.position - Weapon.position;
+    float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+    Quaternion rotation = Quaternion.AngleAxis (rotZ, Vector3.forward);
+
+    Weapon.rotation = Quaternion.Euler(0f, 0f, rotZ); 
+
+        if(rotZ < 89 && rotZ > -89)
         {
-            EnemyGFX.localScale = new Vector3 (1f, 1f, 1f);
+            return;
+        } 
+        else
+        {
+            Weapon.Rotate(180,0,0);
         }
     }
 
-    void Update()
-    {
-        onGround = Physics2D.Raycast(transform.position + colliderOffset, Vector2.down, groundLength, groundLayer) || Physics2D.Raycast(transform.position - colliderOffset, Vector2.down, groundLength, groundLayer);
-    }
+
+        //switch enemy rotation depending where the enemy is facing 
+    //     if (force.x >= 0.01f)
+    //     {
+    //       EnemyGFX.localScale = new Vector3 (-1f, 1f, 1f);
+        
+    //     } else if (force.x <= -0.01f )
+    //     {
+    //         EnemyGFX.localScale = new Vector3 (1f, 1f, 1f);
+    //     }
+    // }
 }

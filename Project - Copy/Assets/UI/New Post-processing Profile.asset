@@ -98,7 +98,7 @@ MonoBehaviour:
     overrideState: 1
     value: {r: 1.0039216, g: 1.0039216, b: 1.0039216, a: 1}
   fastMode:
-    overrideState: 1
+    overrideState: 0
     value: 0
   dirtTexture:
     overrideState: 1
@@ -131,5 +131,5 @@ MonoBehaviour:
     overrideState: 1
     value: 0.156
   fastMode:
-    overrideState: 1
+    overrideState: 0
     value: 0

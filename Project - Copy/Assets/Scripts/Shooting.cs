@@ -15,8 +15,6 @@ public class Shooting : MonoBehaviour
     // public Transform EmptyPoint;
     // public GameObject ShellPrefab;
     public float ExitSpeed = 20f;
-
-
     private int CurrentAmmo;
     private bool isReloading = false;
     public Transform weapon; // weapon flip

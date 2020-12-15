@@ -7,11 +7,6 @@ public class Player : MonoBehaviour {
     public Vector2 direction;
     // Vector2 mousePos;
     // Vector2 MouseRotation;
-
-    public float jumpSpeed = 15f;
-    public float jumpDelay = 0.25f;
-    private float jumpTimer;
-
     public Rigidbody2D rb;
 
     public LayerMask groundLayer;
@@ -32,32 +27,11 @@ public class Player : MonoBehaviour {
         bool wasOnGround = onGround;
         onGround = Physics2D.Raycast(transform.position + colliderOffset, Vector2.down, groundLength, groundLayer) || Physics2D.Raycast(transform.position - colliderOffset, Vector2.down, groundLength, groundLayer);
 
-        if(!wasOnGround && onGround){
-            StartCoroutine(JumpSqueeze(1.25f, 0.8f, 0.05f));
-        }
-
-        if(Input.GetButtonDown("Jump")){
-            jumpTimer = Time.time + jumpDelay;
-        }
-
         direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
     }
     void FixedUpdate() {
         moveCharacter(direction.x);
-        if(jumpTimer > Time.time && onGround){
-            Jump();
-    }
-
-            modifyPhysics();
-            //aim using mouse
-            {
-
-            }
-            // GunFollowMousePos
-        // Vector3 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        // float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-        // transform.rotation = Quaternion.Euler(0f, 0f, rotZ + Offset); 
-        
+            modifyPhysics(); 
         }  
     
 
@@ -72,12 +46,6 @@ public class Player : MonoBehaviour {
             
         }
        
-    }
-    void Jump(){
-        rb.velocity = new Vector2(rb.velocity.x, 0);
-        rb.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
-        jumpTimer = 0;
-        StartCoroutine(JumpSqueeze(0.5f, 1.2f, 0.1f));
     }
     void modifyPhysics() {
         bool changingDirections = (direction.x > 0 && rb.velocity.x < 0) || (direction.x < 0 && rb.velocity.x > 0);
@@ -98,23 +66,6 @@ public class Player : MonoBehaviour {
                 rb.gravityScale = gravity * (fallMultiplier / 2);
             }
         }
-    }
-    IEnumerator JumpSqueeze(float xSqueeze, float ySqueeze, float seconds) {
-        Vector3 originalSize = Vector3.one;
-        Vector3 newSize = new Vector3(xSqueeze, ySqueeze, originalSize.z);
-        float t = 0f;
-        while (t <= 1.0) {
-            t += Time.deltaTime / seconds;
-            characterHolder.transform.localScale = Vector3.Lerp(originalSize, newSize, t);
-            yield return null;
-        }
-        t = 0f;
-        while (t <= 1.0) {
-            t += Time.deltaTime / seconds;
-            characterHolder.transform.localScale = Vector3.Lerp(newSize, originalSize, t);
-            yield return null;
-        }
-
     }
     private void OnDrawGizmos() {
         Gizmos.color = Color.red;
