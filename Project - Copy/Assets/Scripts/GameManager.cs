@@ -8,12 +8,11 @@ public class GameManager : MonoBehaviour
     private float startTime;
     private int CurrentAmmo;
     public Canvas canvas;
-    public Transform bar; 
+
     // Start is called before the first frame update
     void Start()
-    {
+    {    
         startTime = Time.time;
-        bar.localScale = new Vector3(.5f, 1f);
     }
 
     // Update is called once per frame
@@ -31,10 +30,5 @@ public class GameManager : MonoBehaviour
         TimerText.text = Seconds; 
 
         }
-    }
-
-    public void SetSize (float sizenormalized)
-    {
-        bar.localScale = new Vector3 (sizenormalized, 1f);
     }
 }

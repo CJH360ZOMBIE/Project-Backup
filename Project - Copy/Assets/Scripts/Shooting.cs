@@ -18,11 +18,16 @@ public class Shooting : MonoBehaviour
     private int CurrentAmmo;
     private bool isReloading = false;
     public Transform weapon; // weapon flip
+    public float speed = 50f; 
+    private Transform Player; 
+    public Vector2 direction;
 
     float ReadyForNextShot;
+    public Rigidbody2D PlayerRb; 
 
     void start()
     {
+        PlayerRb = Player.GetComponent<Rigidbody2D>();
         CurrentAmmo = MaxAmmo;
     }
 
@@ -51,6 +56,7 @@ public class Shooting : MonoBehaviour
                 }
                 return;
             } 
+            
 
 
         }
@@ -63,6 +69,8 @@ public class Shooting : MonoBehaviour
             }
             
         }
+
+        
     }
 
 
@@ -71,13 +79,16 @@ public class Shooting : MonoBehaviour
     {
         GameObject bullet = Instantiate(bulletPrefab, FirePoint.position, FirePoint.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+
         rb.AddForce(FirePoint.up * BulletForce, ForceMode2D.Impulse); 
         animator.SetTrigger("Shoot"); //*IMPORTANT* make sure trigger name is set to "Shoot" 
 
-
-        
-
         CurrentAmmo --; // - 1 
+    }
+
+        void GunJump()
+    {
+        PlayerRb.AddForce(Vector2.up * speed);
     }
     IEnumerator Reload()
     {
@@ -129,6 +140,11 @@ public class Shooting : MonoBehaviour
         {
             weapon.Rotate(180,0,0);
         }
+
+        if(Input.GetButton("Fire1") && rotZ > 0 && rotZ < -0)
+        {
+            GunJump();
+        }  
     }
 }
 
