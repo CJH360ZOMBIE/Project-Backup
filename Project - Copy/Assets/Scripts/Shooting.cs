@@ -141,7 +141,7 @@ public class Shooting : MonoBehaviour
             weapon.Rotate(180,0,0);
         }
 
-        if(Input.GetButton("Fire1") && rotZ > 0 && rotZ < -0)
+        if(Input.GetButton("Fire1") && rotZ < 90f)
         {
             GunJump();
         }  
