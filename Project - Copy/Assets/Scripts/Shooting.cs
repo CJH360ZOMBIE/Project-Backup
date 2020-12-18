@@ -85,11 +85,6 @@ public class Shooting : MonoBehaviour
 
         CurrentAmmo --; // - 1 
     }
-
-        void GunJump()
-    {
-        PlayerRb.AddForce(Vector2.up * speed);
-    }
     IEnumerator Reload()
     {
         isReloading = true;
@@ -141,9 +136,9 @@ public class Shooting : MonoBehaviour
             weapon.Rotate(180,0,0);
         }
 
-        if(Input.GetButton("Fire1") && rotZ < 90f)
+        if(Input.GetButton("Fire1") && rotZ > 90f) 
         {
-            GunJump();
+            PlayerRb.AddForce(Vector2.right * speed);
         }  
     }
 }
