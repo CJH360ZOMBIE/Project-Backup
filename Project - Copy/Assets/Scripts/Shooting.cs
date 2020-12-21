@@ -14,14 +14,11 @@ public class Shooting : MonoBehaviour
     public ParticleSystem MuzzleFlash;  
     // public Transform EmptyPoint;
     // public GameObject ShellPrefab;
-    public float ExitSpeed = 20f;
+    // public float ExitSpeed = 20f;
     private int CurrentAmmo;
     private bool isReloading = false;
     public Transform weapon; // weapon flip
-    public float speed = 50f; 
     private Transform Player; 
-    public Vector2 direction;
-
     float ReadyForNextShot;
     public Rigidbody2D PlayerRb; 
 
@@ -29,6 +26,7 @@ public class Shooting : MonoBehaviour
     {
         PlayerRb = Player.GetComponent<Rigidbody2D>();
         CurrentAmmo = MaxAmmo;
+        animator = GetComponent<Animator>();
     }
 
     
@@ -44,21 +42,13 @@ public class Shooting : MonoBehaviour
             StartCoroutine(Reload());
             return; // wont continue onto the next statement below
         }
-        if(Input.GetButton("Fire1"))
+        if(Input.GetButtonDown("Fire1"))
         {
             if(Time.time > ReadyForNextShot)
             {
-                
                 ReadyForNextShot = Time.time + 1/FireRate;
                 Shoot(); Empty();
-                {
-                    MuzzleFlash.Play(); 
-                }
-                return;
-            } 
-            
-
-
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -82,8 +72,13 @@ public class Shooting : MonoBehaviour
 
         rb.AddForce(FirePoint.up * BulletForce, ForceMode2D.Impulse); 
         animator.SetTrigger("Shoot"); //*IMPORTANT* make sure trigger name is set to "Shoot" 
-
+        EmitMuzzleFlash();
         CurrentAmmo --; // - 1 
+    }
+
+    private void EmitMuzzleFlash()
+    {
+        MuzzleFlash.Emit(25);
     }
     IEnumerator Reload()
     {
@@ -111,7 +106,7 @@ public class Shooting : MonoBehaviour
     {
         // GameObject bullet = Instantiate(ShellPrefab, EmptyPoint.position, EmptyPoint.rotation);
         Rigidbody2D rb = bulletPrefab.GetComponent<Rigidbody2D>();
-        rb.AddForce(Vector3.up * ExitSpeed, ForceMode2D.Impulse); 
+        // rb.AddForce(Vector3.up * ExitSpeed, ForceMode2D.Impulse); 
     }
 
      void OnBecameInvisible() 
@@ -136,10 +131,10 @@ public class Shooting : MonoBehaviour
             weapon.Rotate(180,0,0);
         }
 
-        if(Input.GetButton("Fire1") && rotZ > 90f) 
-        {
-            PlayerRb.AddForce(Vector2.right * speed);
-        }  
+        // if(Input.GetButton("Fire1") && rotZ > 90f) 
+        // {
+        //     PlayerRb.AddForce(Vector2.right * speed);
+        // }  ROCKET JUMP
     }
 }
 
