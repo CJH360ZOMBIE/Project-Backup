@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Mground
   - Ground
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - MiniMap
   - BackGround
   - Obstacle
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -49,9 +50,6 @@ TagManager:
   - name: BackGround
     uniqueID: 1545896747
     locked: 0
-  - name: Infront
-    uniqueID: 3626731591
-    locked: 0
   - name: Enemy
     uniqueID: 2996549627
     locked: 0
@@ -66,4 +64,7 @@ TagManager:
     locked: 0
   - name: Healthbar
     uniqueID: 420085467
+    locked: 0
+  - name: Infront
+    uniqueID: 3626731591
     locked: 0
