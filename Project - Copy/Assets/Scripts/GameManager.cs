@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; 
+using UnityEngine.SceneManagement; 
 public class GameManager : MonoBehaviour
 {
     public Text TimerText;
@@ -29,6 +30,11 @@ public class GameManager : MonoBehaviour
 
         TimerText.text = Seconds; 
 
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
