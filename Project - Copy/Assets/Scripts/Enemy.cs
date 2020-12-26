@@ -10,11 +10,11 @@ public class Enemy : MonoBehaviour
     public Transform Weapon;
     public int Health; 
     public GameObject DeathEffect;
-    public GameObject FloatingPoints; 
+    public GameObject FloatingPoints;  
     public void TakeDamage(int Damage)
     {
         Health -= Damage;
-        GameObject Points =Instantiate(FloatingPoints, transform.position, Quaternion.identity)as GameObject;
+        GameObject Points = Instantiate(FloatingPoints, transform.position, Quaternion.identity)as GameObject;
         Points.transform.GetChild(0).GetComponent<TextMeshPro>().text = "20";
     }
     // Start is called before the first frame update
@@ -28,8 +28,7 @@ public class Enemy : MonoBehaviour
     {
         if (Health <= 0)
         { 
-             Instantiate(DeathEffect, transform.position, Quaternion.identity);
-            
+            Instantiate(DeathEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
         

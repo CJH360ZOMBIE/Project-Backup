@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &205521514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 205521515}
+  m_Layer: 0
+  m_Name: Critical Hit Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &205521515
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205521514}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.25, y: 0.575, z: 0}
+  m_LocalScale: {x: 0.03527218, y: 0.03527218, z: 0.03527218}
+  m_Children: []
+  m_Father: {fileID: 3772393303600797808}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3772393301695685127
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,6 +537,7 @@ Transform:
   m_Children:
   - {fileID: 3772393303435402642}
   - {fileID: 3772393302936518538}
+  - {fileID: 205521515}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -524,11 +555,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   Weapon: {fileID: 3772393302936518538}
-  Health: 5
+  Health: 2
   DeathEffect: {fileID: 5662600812474406115, guid: 9e7b60d5fb199f849b71b4059c74dd21,
     type: 3}
-  FloatingPoints: {fileID: 150394639904251414, guid: f4de18e5bb90bfa4294ec70565cce6bc,
+  FloatingPoints: {fileID: 4699618627810634611, guid: f4de18e5bb90bfa4294ec70565cce6bc,
     type: 3}
+  CriticalHit: {fileID: 1074337042988594615, guid: 2cb084ceba0b8bb4680ebf6d03ce4bfc,
+    type: 3}
+  CriticalHitSpawn: {fileID: 205521515}
 --- !u!50 &3772393303600797811
 Rigidbody2D:
   serializedVersion: 4

@@ -14,6 +14,16 @@ public class PlayerController : MonoBehaviour
     public LayerMask GroundLayer; 
     private int ExtraJumps; 
     public int ExtraJumpValue; 
+    bool IstouchingFront; 
+    public Transform FrontCheck; 
+    bool WallSliding; 
+    public float WallSlidingSpeed; 
+    bool FacingRight =  true; 
+    bool WallJumping;
+    public float XwallForce; 
+    public float YwallForce;  
+    public float WallJumpTime; 
+    
 
     // Start is called before the first frame update
     void Start()
@@ -45,5 +55,59 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = Vector2.up * Jumpforce; 
         }
+
+        IstouchingFront = Physics2D.OverlapCircle(FrontCheck.position, CheckRadius, GroundLayer);
+
+        if (IstouchingFront == true && IsGrounded == false && MoveInput != 0)
+        {
+            WallSliding = true; 
+        } else
+        {
+            WallSliding = false; 
+        }
+
+        if (WallSliding)
+        {
+            rb.velocity = new Vector2 (rb.velocity.x, Mathf.Clamp(rb.velocity.y, -WallSlidingSpeed, float.MaxValue));
+        }
+
+        if (Input.GetButtonDown("Jump") && WallSliding == true)
+        {
+            WallJumping = true; 
+            Invoke ("SetWallJumpingToFalse", WallJumpTime);
+        }
+
+        if (WallJumping == true)
+        {
+            rb.velocity = new Vector2(XwallForce * -MoveInput, YwallForce);
+        }
+
+        Vector3 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.AngleAxis (rotZ, Vector3.forward);
+
+        transform.rotation = Quaternion.Euler(0f, 180f, 0); 
+
+
+        if(rotZ < 89 && rotZ > -89)
+        {
+            return;
+        } 
+        else
+        {
+            Flip();
+        }
+
+    }
+
+    void Flip()
+    {
+        FacingRight = !FacingRight; //if true, will be false, if false, will be true. 
+        transform.Rotate (0f, 180f, 0f); 
+    }
+
+    void SetWallJumpingToFalse()
+    {
+        WallJumping = false;
     }
 }
